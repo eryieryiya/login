@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>注册</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/supersized.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+    </style>
+
+    <script type='text/javascript'>
+        function register() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            if (username === "" || password === "") {
+                alert("用户名和密码不能为空！");
+                return false;
+            }
+
+            // 从 Local Storage 获取存储的用户信息
+            var users = JSON.parse(localStorage.getItem("users")) || [];
+
+            // 检查用户名是否已存在
+            for (var i = 0; i < users.length; i++) {
+                if (users[i].username === username) {
+                    alert("用户名已存在！");
+                    return false;
+                }
+            }
+
+            // 添加新用户信息
+            users.push({ username: username, password: password });
+            localStorage.setItem("users", JSON.stringify(users));
+
+            alert("注册成功！");
+            window.location.href = "login.html"; // 跳转到登录页面
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+    <div class="page-container">
+        <h1>注册</h1>
+        <form action="javascript:void(0);" method="post" onsubmit="return register()">
+            <div class="form-group">
+                <label for="username" class="labwithinput">用户名：</label>
+                <input type="text" id="username" name="username" class="username" placeholder="请输入您的用户名！">
+            </div>
+            
+            <div class="form-group">
+                <label for="password" class="labwithinput">密码：</label>
+                <input type="password" id="password" name="password" class="password" placeholder="请输入您的用户密码！">
+            </div>
+            
+            <div class="form-group">
+                <button type="submit" class="register_button">注册</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
